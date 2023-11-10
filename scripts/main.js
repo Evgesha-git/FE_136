@@ -1,110 +1,133 @@
-let str = "4 98 4 6 1 32 4 65 4 3 5 7 89 7 10 1 36 8 57";
-let max = -Infinity;
-let min = Infinity;
-let bufer = "";
+// let arr = [12, false, "Текст", 4, 2, -5, 0];
+// let rez = [];
 
-for (let i = 0; i < str.length; i++) {
-    if (str[i] !== " ") {
-        bufer += str[i];
-    } else {
-        bufer = Number(bufer);
-        if (max < bufer) max = bufer;
-        if (min > bufer) min = bufer;
-        bufer = "";
-    }
-}
-
-console.log(`Max: ${max}`);
-console.log(`Min: ${min}`);
-
-// let num = prompt('Введите число');
-// let summ = 0;
-// let count = 0;
-// let reverce = "";
-
-// for (let i = 0; i < num.length; i++) {
-//     console.log(num[i]);
-//     summ += +num[i];
-//     count += 1;
-//     reverce = num[i] + reverce; // 123 -> 1 + '' (1) -> 2 + 1 (21) -> 3 + 21 (321)
+// while (arr.length) {
+//     let buff = arr.pop();
+    // buff = buff.toString();
+    // buff = buff.split('');
+    // buff = buff.reverse();
+    // buff = buff.join('');
+    // buff = buff.toString().split("").reverse().join("");
+    // toString() -> string.split('') -> [].reverse() -> [].join('')
+    // rez.push(buff);
+    // rez.push(arr.pop());
 // }
 
-// console.log(`
-//     вводится число ${num}; 
-//     цифр в числе = ${count}; 
-//     сумма = ${summ}; 
-//     обратный порядок ${reverce}.
-// `);
+// console.log(rez);
 
-/**
- * Есть некоторое в диапазоне от 0 до 100.
- * Задача угадать это число за 7 попыток.
- * Пользователю выводить сообщение больше или меньше заданного числа
- */
+// let arr2 = [5, 9, 21, , , 9, 78, , , , 6];
+// let counter = 0;
 
-let testNum = Math.floor(Math.random() * 100);
-let counter = 0;
-
-// while (true) {
-//     if (counter >= 7) {
-//         alert(`Количество попыток израсходовано, заданное число = ${testNum}`);
-//         break;
+// for (let i = 0; i < arr2.length; i++) {
+//     if (arr2[i] === undefined) {
+//         counter++; // counter = counter + 1
 //     }
-
-//     let num = +prompt("Введите число от 0 до 100");
-
-//     if (num === testNum) {
-//         alert(
-//             `вы выйграли! Число попыток: ${counter}, Заданное число = ${testNum}`
-//         );
-//         break;
-//     }
-
-//     if (num > testNum) {
-//         alert(`Заданное число меньше ${num}`);
-//     } else {
-//         alert(`Заданное число больше ${num}`);
-//     }
-
-//     counter++;
 // }
 
-document.write('<div style="display: flex; gap: 40px; flex-wrap: wrap;">');
-for (let i = 1; i < 11; i++){
-    document.write('<div>');
-    for (let j = 1; j < 11; j++){
-        document.write(`${i} * ${j} = ${i * j} <br/>`);
-    }
-    document.write('</div>');
-}
-document.write('</div>');
+// console.log(counter);
 
-let arr = [1, 2, 3];
+// let arr3 = [48, 9, 0, 4, 21, 2, 1, 0, 8, 84, 76, 8, 4, 13, 2];
+// let fIndex = arr3.indexOf(0);
+// let lIndex = arr3.lastIndexOf(0);
+// let rez2 = 0;
 
-// console.log(arr.length);
-// arr[100] = 'lol';
-// console.log(arr);
-// console.log(arr.length);
+// if (fIndex === -1 || lIndex === -1){
+//     rez2 = 'Нулей нет';
+// } else if (fIndex === lIndex) {
+//     rez2 = 0;
+// } else {
+    // for (let i = fIndex; i < lIndex; i++){
+    //     rez2 += arr3[i]; //rez2 = rez2 + arr3[i]
+    // }
+//     let s = arr3.slice(fIndex, lIndex);
+//     while (s.length){
+//         rez2 += s.pop(); // rez2 = rez2 + s.pop()
+//     }
+// }
+
+// console.log(rez2);
+
+// let h = +prompt();
+
+// for (let i = 1; i <= h; i++){
+    // let sp = '';
+    // let p = '';
+    
+    // for (let j = 0; j < h - i; j++){
+    //     sp = sp + ' ';
+    // }
+
+    // for (let j = 0; j < i * 2 - 1; j++) {
+    //     p += '^';
+    // }
+
+    // document.write(`<pre>${sp + p}</pre>`);
+//     document.write(`<pre>${(' ').repeat(h - i) + ('^').repeat(i * 2 - 1)}</pre>`);
+// }
+
+// let matrix = [
+//     [1, 2, 3],
+//     [4, 5, 6],
+//     [7, 8, 9],
+// ];
+// let rez3 = 0;
+
+// for (i = 0; i < matrix.length; i++){
+//     rez3 = rez3 + matrix[i][i];
+// }
+
+// console.log(rez3);
+
+// let obj = {
+//     a: 1,
+//     b: 2,
+//     c: 3,
+//     d: [1, 2, 3],
+//     name: '',
+//     price: 1000,
+//     count: 10,
+//     index: 1232,
+// }
+
+// console.log(obj.b);
+// console.log(obj['a']);
+
+
 
 /**
- * push - позволяет добавить элемент в конец массива
- * pop - извлечение элемента с конца массива
- * shift - извлечь элемент из начала массива
- * unshift - добавить в начало массива
- * reverse - разворачивает массив
- * join - объединяет массив в строку, при этом в качестве параметра можно передать разделитель
  * 
- * split - но это не метод массивов
- * 
- * sort - сортировка
- * slice - позволяет нам получить под массив, в параметрах индекс начала и индекс конца
- * splice - не безопасен, два параметра индекс начала и количество
+ * @param {number} a 
+ * @param {number} b 
  */
+function f1 (a, b) { // function declaration
+    return a + b;
+}
 
-let arr2 = [234, 2, 1, 111, 123, 65, 9, 11, 34];
 
-arr2.sort(function (a, b) {
-    return b - a;
-});
+const f2 = function (a, b){ // function expresion
+    return a + b;
+}
 
-console.log(arr2);
+const f3 = (a, b) => a + b;
+
+const f4 = (a, b, c) => {
+    let d = a + b;
+    let f = d * (b - c);
+    return f;
+}   
+
+const f5 = x => x ** x;
+
+console.log(f1(1, 3));
+console.log(f2(4, 7));
+console.log(f3(14, 37));
+console.log(f4(5, 8, 22));
+console.log(f5(10));
+
+(function () {
+    /**
+     * Тут вариться некоторый код
+     */
+    var a = 1200;
+    console.log('Функция закончена');
+})();
