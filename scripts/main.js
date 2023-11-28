@@ -1,94 +1,101 @@
-let items1 = document.getElementsByClassName("item");
-let items2 = document.querySelectorAll(".item");
-
-// for (let i of items1) {
-//     console.log(i);
-// }
-
-let links = document.links;
-
-// console.log([...links]);
-
-[...items1].forEach((item, i) => {
-    if (i % 2 !== 0) {
-        item.style.fontSize = "26px";
-    }
-});
-
-const item = document.querySelector(".test");
-const button = document.getElementById("toggle");
-const width = window.innerWidth;
-let flag = false;
-
-function moveItem() {
-    let mr = parseInt(item.style.marginLeft) || 0;
-
-    if (mr > width) {
-        flag = !flag;
-    } else if (mr < 0) {
-        flag = !flag;
-    }
-
-    if (flag) {
-        mr -= 1;
-    } else {
-        mr += 1;
-    }
-
-    item.style.marginLeft = mr + "px";
-
-    setTimeout(() => moveItem(), 0);
-}
-
-button.onclick = function () {
-    item.classList.toggle("active");
-    moveItem();
-};
-console.log(item);
-
 /**
- * Если надо обратиться к потомкам -> firstChild (firstElementChild), childNodes (children), lastChild (lastElementChild)
- * Между соседними элементами -> previousSibling (previousElementSibling), nextSibling (nextElementSibling)
- * Обращение к родителю -> parentNode (parentElement)
+ * События мыши
+ * События клавиатуры
+ * События документа Window
+ * События формы
+ * События буфера обмена
+ * События Перетаскивания
+ * События медиа
+ * События CSS
  */
 
-let close = document.querySelector(".close");
+(function () {
+    const form = document.querySelector("form");
+    const text = document.querySelector("input[type=text]");
+    // const color = document.querySelector("input[type=color]");
+    // const regExp = /[А-ЯЁ]+/g;
 
-const titleToggle = function () {
-    let title = this;
-    let parent = title.closest("li");
-    if (!parent) return;
-    parent.classList.toggle("active");
-};
+    // text.addEventListener("input", () => {
+    //     if (!regExp.test(text.value)) {
+    //         text.classList.add("error");
+    //     } else {
+    //         text.classList.remove("error");
+    //     }
+    // });
+    // text.addEventListener("focus", () => {
+    //     text.classList.remove("error");
+    // });
 
-const titels = document.querySelectorAll(".title");
+    // color.addEventListener("change", (e) => {
+    //     console.log(color.value);
+    //     document.body.style.background = color.value;
+    // });
+    const todoContainer = document.querySelector('.todo__items');
 
-// Array.prototype.forEach.call(titels, function (item) {
-//     item.onclick = titleToggle;
-// });
+    const createToDoItem = function (text) {
+        let li = document.createElement('li');
+        li.classList.add('todo__item');
 
-// ([]).forEach.call(titels, function (item) {
-//     item.onclick = titleToggle;
-// });
+        let check = document.createElement('input');
+        check.setAttribute('type', 'checkbox');
+        // check.disabled = true;
 
-const forEachHTML = Array.prototype.forEach.bind(titels);
+        let textSpan = document.createElement('span');
+        textSpan.innerText = text;
 
-forEachHTML(function (item) {
-    item.onclick = titleToggle;
-});
+        const doneItem = (event) => {
+            console.log(event);
+            li.classList.toggle('done');
+            // if (event.target.tagName !== 'INPUT'){
+            //     check.checked = !check.checked;
+            // }
+            if (event.target !== check){
+                check.checked = !check.checked;
+            }
+        }
 
-const target = document.getElementById("target");
+        li.addEventListener('click', doneItem);
 
-target.innerHTML = `
-    <form action=""><input type="text" name="" id="" /><br /><input type="text" name="" id="" /><br /><input type="text" name="" id="" /><br /><input type="text" name="" id="" /><br /><input type="text" name="" id="" /><br /><button type="submit">Submit</button></form>
-`;
 
-// target.contentEditable = true;
+        li.append(check, textSpan);
+        return li;
+    }
 
-target.addEventListener('click', function () {
-    alert('Event Listener');
-});
 
-target.addEventListener('click', function () {
-    alert ('2');
-});
+    form.addEventListener('submit', (event) => {
+        event.preventDefault();
+        let item = createToDoItem(text.value);
+        text.value = '';
+        todoContainer.append(item);
+    });
+
+    // const cursor = document.querySelector('.cursor');
+    const cursor = document.querySelectorAll('*');
+
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+
+    const randomPos = (max) => {
+        return Math.floor(Math.random() * max);
+    }
+    
+    console.log(cursor);
+
+    [...cursor].forEach(item => {
+        item.addEventListener('mouseover', () => {
+            item.style.left = randomPos(width - item.offsetWidth) + 'px';
+            item.style.top = randomPos(height - item.offsetHeight) + 'px';
+        });
+    })
+
+    // cursor.addEventListener('mouseover', () => {
+    //     cursor.style.left = randomPos(width - 100) + 'px';
+    //     cursor.style.top = randomPos(height - cursor.offsetHeight) + 'px';
+    // });
+
+    document.body.addEventListener('mousemove', (event) => {
+        // console.log(event.pageX + ' : ' + event.pageY);
+        // cursor.style.left = event.pageX + 'px';
+        // cursor.style.top = event.pageY + 'px';
+    });
+})();

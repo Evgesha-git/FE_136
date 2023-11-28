@@ -4,78 +4,23 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Document</title>
-        <style >
-            .active{
-                background: rgb(255, 200, 200);
-                color: rgb(99, 99, 99);
-            }
-
-            li p {
-                display: none;
-            }
-
-            li.active p {
-                display: block;
-            }
-        </style>
+        <link rel="stylesheet" href="./style/style.css">
     </head>
     <body>
-        <button id="toggle">Click me</button>
-        <p class="item" id="1">Lorem ipsum dolor sit amet.</p>
-        <p class="item" id="2">Minima ipsam expedita quos in!</p>
-        <p class="item" id="3">
-            Cumque suscipit impedit exercitationem accusantium.
-        </p>
-        <p class="item" id="4">Autem recusandae ullam aliquam sequi!</p>
-        <p class="item" id="5">Ab officiis harum recusandae blanditiis.</p>
-        <a href=""
-            >Lorem ipsum dolor sit amet consectetur adipisicing elit. Vero eum
-            quasi earum cupiditate incidunt sed voluptatibus molestias!
-            Laudantium aliquam consequatur aperiam nemo deleniti voluptatibus
-            non placeat velit, nostrum, incidunt suscipit.</a
-        ><a href=""
-            >Atque, animi unde officia asperiores similique sunt soluta ipsam
-            eius, temporibus, vel labore ratione. Atque quo nam ullam asperiores
-            error vel facere minus architecto nostrum, iste placeat cumque.
-            Doloremque, sint.</a
-        ><a href=""
-            >Sint accusantium hic optio, laborum quaerat quis perspiciatis,
-            accusamus magnam iste earum quibusdam, corporis esse itaque. Sint,
-            similique atque placeat itaque, autem facilis ipsa obcaecati
-            inventore repudiandae, iusto aperiam aut.</a
-        ><a href=""
-            >Asperiores facilis, ipsum non sit neque modi velit, necessitatibus
-            cumque temporibus illum qui explicabo quia mollitia praesentium!
-            Sit, ratione nisi, repellendus iusto repellat cumque, alias
-            distinctio earum dolore illo nam?</a
-        >
+        <div class="container">
+            <form action="">
+                <input type="text">
+                <!-- <input type="color" name="" id=""> -->
+                <button type="submit" style="display: none;">Add</button>
+            </form>
+            <ul class="todo__items">
 
-        <div class="test active">
-            <ul>
-                <li>
-                    <h3 class="title">Lorem, ipsum dolor.</h3>
-                    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Possimus, officiis?</p>
-                </li>
-                <li>
-                    <h3 class="title" onmouseover="alert('JS')">Blanditiis, rerum delectus!</h3>
-                    <p>Nesciunt, vero consectetur nisi ipsam dolorum recusandae ad culpa fuga.</p>
-                </li>
-                <li>
-                    <h3 class="title">Accusamus, soluta laboriosam!</h3>
-                    <p>Itaque reiciendis debitis esse consequuntur quam ad numquam aliquid dignissimos.</p>
-                </li>
-                <li>
-                    <h3 class="title">Veniam, magnam dicta!</h3>
-                    <p>Cum animi sit omnis molestias unde officiis, sed eligendi ullam.</p>
-                </li>
-                <li>
-                    <h3 class="title">Dignissimos, ullam nesciunt!</h3>
-                    <p>Soluta eos adipisci nemo sed magni voluptates dolore rerum provident.</p>
-                </li>
             </ul>
         </div>
-
-        <div id="target"></div>
+        
+        <div class="cursor">
+            <p>Lorem, ipsum dolor.</p>
+        </div>
     </body>
     <script src="./scripts/main.js"></script>
 </html>
