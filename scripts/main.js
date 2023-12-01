@@ -1,101 +1,108 @@
-/**
- * События мыши
- * События клавиатуры
- * События документа Window
- * События формы
- * События буфера обмена
- * События Перетаскивания
- * События медиа
- * События CSS
- */
+// @ts-check
 
 (function () {
-    const form = document.querySelector("form");
-    const text = document.querySelector("input[type=text]");
-    // const color = document.querySelector("input[type=color]");
-    // const regExp = /[А-ЯЁ]+/g;
+    /**
+     * 
+     * @param {string} selector 
+     */
+    function tabs(selector) {
+        const containers = document.querySelectorAll(selector);
 
-    // text.addEventListener("input", () => {
-    //     if (!regExp.test(text.value)) {
-    //         text.classList.add("error");
-    //     } else {
-    //         text.classList.remove("error");
-    //     }
-    // });
-    // text.addEventListener("focus", () => {
-    //     text.classList.remove("error");
-    // });
+        /**
+         * 
+         * @param {Element} container 
+         */
+        function tabController (container){
+            const buttons = container.querySelector(".tab__buttons");
+            const contents = container.querySelector(".tab__contents");
+            if (!buttons) return;
+            if (!contents) return;
 
-    // color.addEventListener("change", (e) => {
-    //     console.log(color.value);
-    //     document.body.style.background = color.value;
-    // });
-    const todoContainer = document.querySelector('.todo__items');
-
-    const createToDoItem = function (text) {
-        let li = document.createElement('li');
-        li.classList.add('todo__item');
-
-        let check = document.createElement('input');
-        check.setAttribute('type', 'checkbox');
-        // check.disabled = true;
-
-        let textSpan = document.createElement('span');
-        textSpan.innerText = text;
-
-        const doneItem = (event) => {
-            console.log(event);
-            li.classList.toggle('done');
-            // if (event.target.tagName !== 'INPUT'){
-            //     check.checked = !check.checked;
-            // }
-            if (event.target !== check){
-                check.checked = !check.checked;
+            /**
+             * 
+             * @param {number} num 
+             */
+            const contentChange = (num) => {
+                [...contents.children].forEach((item, i) => {
+                    if (i === num) {
+                        item.classList.add('active');
+                    } else {
+                        item.classList.remove('active');
+                    }
+                });
             }
+
+            /**
+             * 
+             * @param {Event & {target: HTMLElement}} event 
+             */
+            const buttonHandler = (event) => {
+                let button = event.target;
+                if (button.classList.contains('tab__button')){
+                    [...buttons.children].forEach((elem, i) => {
+                        if (elem === button){
+                            elem.classList.add('active');
+                            contentChange(i);
+                        } else {
+                            elem.classList.remove('active');
+                        }
+                    });
+                }
+            }
+            
+            // @ts-ignore
+            buttons.addEventListener('click', (event) => buttonHandler(event));
         }
 
-        li.addEventListener('click', doneItem);
-
-
-        li.append(check, textSpan);
-        return li;
+        if (containers) {
+            containers.forEach(container => tabController(container));
+        }
     }
 
+    const tooltips = function (selector) {
+        const elems = document.querySelectorAll(selector);
+        if (!elems || elems.length === 0) return;
 
-    form.addEventListener('submit', (event) => {
-        event.preventDefault();
-        let item = createToDoItem(text.value);
-        text.value = '';
-        todoContainer.append(item);
-    });
+        const tooltipHandler = (elem) => {
+            const createTooltip = (event) => {
+                /**
+                 * @type {HTMLElement}
+                 */
+                let target = event.target;
+                let text = target.dataset.text;
+                if (!text) return;
 
-    // const cursor = document.querySelector('.cursor');
-    const cursor = document.querySelectorAll('*');
+                let tooltipElement = document.createElement('div');
+                tooltipElement.classList.add('tooltip__content');
+                tooltipElement.innerHTML = text;
+                tooltipElement.style.top = target.offsetHeight + 10 + 'px';
 
-    const width = window.innerWidth;
-    const height = window.innerHeight;
+                target.append(tooltipElement);
+            }
 
-    const randomPos = (max) => {
-        return Math.floor(Math.random() * max);
-    }
+            const removeTooltip = event => {
+                let target = event.target;
+                let children = target.children;
     
-    console.log(cursor);
+                [...children].forEach (item => {
+                    if (item.classList.contains('tooltip__content')){
+                        item.style.opacity = 0;
+                        // setTimeout(() => item.remove(), 300);
+                        item.addEventListener('transitionend', function () {
+                            this.remove();
+                        });
+                        // item.remove();
+                    }
+                });
+            }
 
-    [...cursor].forEach(item => {
-        item.addEventListener('mouseover', () => {
-            item.style.left = randomPos(width - item.offsetWidth) + 'px';
-            item.style.top = randomPos(height - item.offsetHeight) + 'px';
-        });
-    })
+            elem.addEventListener ('mouseout', removeTooltip);
+            elem.addEventListener ('mouseover', createTooltip);
+        }
 
-    // cursor.addEventListener('mouseover', () => {
-    //     cursor.style.left = randomPos(width - 100) + 'px';
-    //     cursor.style.top = randomPos(height - cursor.offsetHeight) + 'px';
-    // });
+        elems.forEach(elem => tooltipHandler(elem));
+    }
 
-    document.body.addEventListener('mousemove', (event) => {
-        // console.log(event.pageX + ' : ' + event.pageY);
-        // cursor.style.left = event.pageX + 'px';
-        // cursor.style.top = event.pageY + 'px';
-    });
+    tooltips('.tooltip');
+    tabs(".tab__container");
 })();

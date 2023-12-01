@@ -9,31 +9,55 @@ body{
 }
 
 .container {
-    max-width: 450px;
+    max-width: 700px;
     width: 100%;
     margin: 0 auto;
 }
 
-.todo__items{
-    list-style: none;
+.tab__buttons{
+    display: flex;
+    gap: 5px;
+    padding-bottom: 5px;
+    border-bottom: 3px solid;
 }
 
-/* .todo__item{
-    position: absolute;
-} */
-
-form {
-    position: absolute;
-}
-
-.done {
-    text-decoration: line-through;
-}
-
-.cursor{
-    position: absolute;
-    border: 1px solid #000;
-    border-radius: 10px;
+.tab__button{
     padding: 10px;
-    width: 100px;
+    border: 1px solid #000a;
+    cursor: pointer;
+}
+
+.tab__button:hover {
+    background: #ececec;
+}
+
+.tab__button.active {
+    background: #b1b1b1;
+}
+
+.tab__content{
+    display: none;
+}
+
+.tab__content.active{
+    display: block;
+}
+
+.tooltip{
+    position: relative;
+    background: rgb(255, 253, 143);
+    cursor: pointer;
+}
+
+.tooltip__content{
+    position: absolute;
+    background: #fff;
+    border-radius: 10px;
+    padding: 12px;
+    width: 124px;
+    /* top: 0; */
+    left: -50%;
+    transform: translateX(-25%);
+    box-shadow: 0 0 3px 1px rgba(0, 0, 0, .4);
+    transition: 1.3s linear;
 }
