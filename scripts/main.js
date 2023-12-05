@@ -1,108 +1,94 @@
-// @ts-check
-
 (function () {
-    /**
-     * 
-     * @param {string} selector 
-     */
-    function tabs(selector) {
-        const containers = document.querySelectorAll(selector);
+    const slider = (selector) => {
+        const slidersContainer = document.querySelectorAll(selector);
 
-        /**
-         * 
-         * @param {Element} container 
-         */
-        function tabController (container){
-            const buttons = container.querySelector(".tab__buttons");
-            const contents = container.querySelector(".tab__contents");
-            if (!buttons) return;
-            if (!contents) return;
+        const sliderHandler = (container) => {
+            /**
+             * @type {HTMLElement}
+             */
+            const slides = container.querySelector(".slides");
+            if (!slides || slides.children.length === 0) return;
+
+            const buttons = container.querySelectorAll(".button");
+            if (!buttons || buttons.length < 2) return;
+
+            const pagination = container.querySelector(".pagination");
 
             /**
-             * 
-             * @param {number} num 
+             * @type {HTMLElement[]}
              */
-            const contentChange = (num) => {
-                [...contents.children].forEach((item, i) => {
-                    if (i === num) {
-                        item.classList.add('active');
-                    } else {
-                        item.classList.remove('active');
+            const items = [];
+
+            if (pagination) {
+                [...slides.children].forEach((elem, i) => {
+                    let item = document.createElement("span");
+                    if (i === 0) {
+                        item.classList.add("active");
                     }
+                    item.addEventListener('click', () => paginationHandler(i));
+                    items.push(item);
+                    pagination.append(item);
                 });
             }
 
-            /**
-             * 
-             * @param {Event & {target: HTMLElement}} event 
-             */
-            const buttonHandler = (event) => {
-                let button = event.target;
-                if (button.classList.contains('tab__button')){
-                    [...buttons.children].forEach((elem, i) => {
-                        if (elem === button){
-                            elem.classList.add('active');
-                            contentChange(i);
+            function paginationHandler(num){
+                slides.style.transform = `translateX(-${num * 100}%)`;
+
+                items.forEach((item, i) => {
+                    if (i === num) {
+                        item.classList.add("active");
+                    } else {
+                        item.classList.remove("active");
+                    }
+                });
+            };
+
+            const switchSlide = (event) => {
+                const buf = event.target.classList.contains("next");
+
+                /**
+                 * @type {string}
+                 */
+                let x = slides.style.transform || "0";
+                x = x.replace("translateX(", "");
+                x = Math.abs(parseInt(x));
+
+                if (buf) {
+                    if (x < slides.children.length * 100 - 100) {
+                        // ((slides.children.length - 1) * 100)
+                        x += 100;
+                    } else {
+                        x = 0;
+                    }
+                } else {
+                    if (x > 0) {
+                        x -= 100;
+                    } else {
+                        x = slides.children.length * 100 - 100;
+                    }
+                }
+
+                if (items.length > 0) {
+                    let marker = x / 100;
+                    items.forEach((item, i) => {
+                        if (i === marker) {
+                            item.classList.add("active");
                         } else {
-                            elem.classList.remove('active');
+                            item.classList.remove("active");
                         }
                     });
                 }
-            }
-            
-            // @ts-ignore
-            buttons.addEventListener('click', (event) => buttonHandler(event));
-        }
 
-        if (containers) {
-            containers.forEach(container => tabController(container));
-        }
-    }
+                slides.style.transform = `translateX(-${x}%)`;
+            };
 
-    const tooltips = function (selector) {
-        const elems = document.querySelectorAll(selector);
-        if (!elems || elems.length === 0) return;
+            buttons.forEach((button) =>
+                button.addEventListener("click", switchSlide)
+            );
+        };
 
-        const tooltipHandler = (elem) => {
-            const createTooltip = (event) => {
-                /**
-                 * @type {HTMLElement}
-                 */
-                let target = event.target;
-                let text = target.dataset.text;
-                if (!text) return;
+        slidersContainer.forEach((slider) => sliderHandler(slider));
+    };
 
-                let tooltipElement = document.createElement('div');
-                tooltipElement.classList.add('tooltip__content');
-                tooltipElement.innerHTML = text;
-                tooltipElement.style.top = target.offsetHeight + 10 + 'px';
-
-                target.append(tooltipElement);
-            }
-
-            const removeTooltip = event => {
-                let target = event.target;
-                let children = target.children;
-    
-                [...children].forEach (item => {
-                    if (item.classList.contains('tooltip__content')){
-                        item.style.opacity = 0;
-                        // setTimeout(() => item.remove(), 300);
-                        item.addEventListener('transitionend', function () {
-                            this.remove();
-                        });
-                        // item.remove();
-                    }
-                });
-            }
-
-            elem.addEventListener ('mouseout', removeTooltip);
-            elem.addEventListener ('mouseover', createTooltip);
-        }
-
-        elems.forEach(elem => tooltipHandler(elem));
-    }
-
-    tooltips('.tooltip');
-    tabs(".tab__container");
+    slider(".slider__container");
 })();
