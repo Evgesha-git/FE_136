@@ -1,0 +1,41 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+ul{
+    list-style: none;
+}
+
+.container {
+    max-width: 700px;
+    margin: 0 auto;
+    padding-top: 50px;
+}
+
+.button{
+    padding: 10px 20px;
+    border-radius: 10px;
+    background: #474747;
+    width: max-content;
+    margin-bottom: 20px;
+    cursor: pointer;
+}
+
+.accordeon li h3{
+    padding: 15px 25px;
+    background: #a9a9a9;
+}
+
+.accordeon li h3.active {
+    background: #474747;
+}
+
+.accordeon li p{
+    display: none;
+    padding: 10px;
+}
+
+.accordeon li h3.active + p{
+    display: block;
+}

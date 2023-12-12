@@ -1,0 +1,54 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+ul{
+    list-style: none;
+}
+
+.container{
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.portfolio__filter{
+    display: flex;
+    gap: 15px;
+    list-style: none;
+}
+
+.portfolio__filter li{
+    padding: 10px;
+    border-radius: 5px;
+    background: #ffffb0;
+    cursor: pointer;
+}
+
+.portfolio__filter li.active{
+    background: #daffb0;
+}
+
+.portfolio__filter li:hover{
+    background: #fafa58;
+}
+
+.portfolio__list{
+    display: grid;
+    grid-template-columns: repeat(3, 150px);
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.portfolio__list li{
+    position: relative;
+    height: 150px;
+}
+
+.portfolio__list li h3 {
+    position: absolute;
+    font-size: 16px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
