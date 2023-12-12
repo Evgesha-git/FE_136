@@ -27,6 +27,11 @@ const accordeon = selector => {
             const target = e.target;
             if (target.tagName === 'H3'){
                 target.classList.toggle('active');
+                [...main.children].forEach(item => {
+                    if (item.firstElementChild !== target) {
+                        item.firstElementChild.classList.remove('active');
+                    }
+                })
             }
         });
     }
