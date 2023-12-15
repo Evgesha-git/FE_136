@@ -18,7 +18,7 @@ const accordeon = selector => {
             text.innerHTML = `Lorem ipsum dolor sit amet consectetur, adipisicing elit. Labore, sunt quasi. Sit officiis vero delectus animi aut molestiae libero incidunt fugit nihil tempore, beatae harum, quaerat impedit voluptatibus error esse, facilis odit fuga quasi perspiciatis aliquam ipsum repellendus. Modi minus ea doloremque tempora, quo nostrum quia ad. Laborum, dolore quibusdam.`;
             container.append(header, text);
             main.append(container);
-        })
+        });
 
         main.addEventListener('click', e => {
             /**
@@ -31,7 +31,7 @@ const accordeon = selector => {
                     if (item.firstElementChild !== target) {
                         item.firstElementChild.classList.remove('active');
                     }
-                })
+                });
             }
         });
     }

@@ -23,6 +23,8 @@ const galery = (selector) => {
 
             if (!src) return;
 
+            e.preventDefault();
+
             imgContainer.classList.add("active");
             if (imgFull.children[0]) {
                 imgFull.children[0].remove();
