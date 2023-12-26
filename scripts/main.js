@@ -13,6 +13,10 @@ class Notes {
     edit(data) {
         Object.assign(this.data, data);
     }
+
+    get () {
+        return `${this.data.title} \n ${this.data.content}`
+    }
 }
 
 // let note = new Notes({title: 'title 1', content: 'content 1'});
@@ -38,9 +42,62 @@ class NoteController {
         let note = this.notes.find((note) => note.data.id === id);
         note.edit(data);
     }
+
+    get store() {
+        let data = localStorage.getItem("notes");
+        data = JSON.parse(data);
+        return data;
+    }
+
+    set store(data) {
+        let string = JSON.stringify(data);
+        localStorage.setItem("notes", string);
+    }
+
+    get cookie() {
+        let name = 'notes'
+        let matches = document.cookie.match(
+            new RegExp(
+                "(?:^|; )" +
+                    name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, "\\$1") +
+                    "=([^;]*)"
+            )
+        );
+        return matches ? true : false;
+    }
+
+    set cookie(time) {
+
+        let options = {
+          path: '/',
+          secure: true, 
+          'max-age': time
+        };
+      
+        if (options.expires instanceof Date) {
+          options.expires = options.expires.toUTCString();
+        }
+      
+        let updatedCookie = encodeURIComponent('notes') + "=" + encodeURIComponent('');
+      
+        for (let optionKey in options) {
+          updatedCookie += "; " + optionKey;
+          let optionValue = options[optionKey];
+          if (optionValue !== true) {
+            updatedCookie += "=" + optionValue;
+          }
+        }
+      
+        document.cookie = updatedCookie;
+      }
+
+      get() {
+        this.notes.forEach(note => console.log(note.get()));
+      }
+      
 }
 
-const notes = new NoteController();
+// const notes = new NoteController();
 
 // notes.add({title: 'title 1', content: 'content 1'});
 // notes.add({title: 'title 2', content: 'content 2'});
@@ -76,11 +133,23 @@ class NoteUI extends NoteController {
             this.add(data);
             title.value = "";
             content.value = "";
+            this.store = this.notes;
+            this.cookie = 10 * 24 * 60 * 60;
             this.render();
+            this.get();
         });
 
         form.append(title, content, send);
         this.root.append(form, this.noteContainer);
+
+        if (!this.cookie){
+            localStorage.removeItem('notes');
+        }
+
+        if (this.store) {
+            this.store.forEach((note) => this.add(note.data));
+            this.render();
+        }
     }
 
     render() {
@@ -105,6 +174,7 @@ class NoteUI extends NoteController {
 
             remove.addEventListener("click", () => {
                 this.remove(note.data.id);
+                this.store = this.notes;
                 this.render();
             });
 
@@ -119,6 +189,8 @@ class NoteUI extends NoteController {
                         content: content.innerText,
                     };
                     this.edit(note.data.id, data);
+                    this.cookie = 10 * 24 * 60 * 60;
+                    this.store = this.notes;
                 } else {
                     title.contentEditable = true;
                     content.contentEditable = true;
