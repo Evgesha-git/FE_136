@@ -7,15 +7,15 @@
 class Notes {
     constructor(data) {
         //{title: '', content: ''}
-        if (data.title.length > 0 || data.content.length > 0) this.data = data;
+        if (data.title.length > 0 || data.body.length > 0) this.data = data;
     }
 
     edit(data) {
         Object.assign(this.data, data);
     }
 
-    get () {
-        return `${this.data.title} \n ${this.data.content}`
+    get() {
+        return `${this.data.title} \n ${this.data.body}`;
     }
 }
 
@@ -28,7 +28,7 @@ class NoteController {
     }
 
     add(data) {
-        if (data.title.length === 0 || data.content.length === 0) return;
+        if (data.title.length === 0 || data.body.length === 0) return;
         let note = new Notes(data);
         note.edit({ id: this.id++ });
         this.notes.push(note);
@@ -55,7 +55,7 @@ class NoteController {
     }
 
     get cookie() {
-        let name = 'notes'
+        let name = "notes";
         let matches = document.cookie.match(
             new RegExp(
                 "(?:^|; )" +
@@ -67,34 +67,39 @@ class NoteController {
     }
 
     set cookie(time) {
-
         let options = {
-          path: '/',
-          secure: true, 
-          'max-age': time
+            path: "/",
+            secure: true,
+            "max-age": time,
         };
-      
-        if (options.expires instanceof Date) {
-          options.expires = options.expires.toUTCString();
-        }
-      
-        let updatedCookie = encodeURIComponent('notes') + "=" + encodeURIComponent('');
-      
-        for (let optionKey in options) {
-          updatedCookie += "; " + optionKey;
-          let optionValue = options[optionKey];
-          if (optionValue !== true) {
-            updatedCookie += "=" + optionValue;
-          }
-        }
-      
-        document.cookie = updatedCookie;
-      }
 
-      get() {
-        this.notes.forEach(note => console.log(note.get()));
-      }
-      
+        if (options.expires instanceof Date) {
+            options.expires = options.expires.toUTCString();
+        }
+
+        let updatedCookie =
+            encodeURIComponent("notes") + "=" + encodeURIComponent("");
+
+        for (let optionKey in options) {
+            updatedCookie += "; " + optionKey;
+            let optionValue = options[optionKey];
+            if (optionValue !== true) {
+                updatedCookie += "=" + optionValue;
+            }
+        }
+
+        document.cookie = updatedCookie;
+    }
+
+    get() {
+        this.notes.forEach((note) => console.log(note.get()));
+    }
+
+    async getApiData (){
+        let resp = await fetch('https://jsonplaceholder.typicode.com/posts');
+        let data = await resp.json();
+        return data;
+    }
 }
 
 // const notes = new NoteController();
@@ -109,10 +114,18 @@ class NoteUI extends NoteController {
         super();
         this.root = document.querySelector(selector);
         this.noteContainer = document.createElement("div");
+        this.preloader = document.createElement('div');
+        this.preloader.classList.add('preloader');
+        this.preloader.innerHTML = `
+            <div class="preloader__row">
+                <div class="preloader__item"></div>
+                <div class="preloader__item"></div>
+            </div>
+        `
         this.init();
     }
 
-    init() {
+    async init() {
         let form = document.createElement("form");
         let title = document.createElement("input");
         title.setAttribute("type", "text");
@@ -125,7 +138,7 @@ class NoteUI extends NoteController {
             event.preventDefault();
             const data = {
                 title: title.value,
-                content: content.value,
+                body: content.value,
             };
 
             // NoteController.prototype.add(data);
@@ -142,8 +155,17 @@ class NoteUI extends NoteController {
         form.append(title, content, send);
         this.root.append(form, this.noteContainer);
 
-        if (!this.cookie){
-            localStorage.removeItem('notes');
+        if (!this.store){
+            this.root.append(this.preloader);
+            let data = await this.getApiData();
+            this.preloader.remove();
+            data.forEach(note => this.add(note));
+            this.store = this.notes;
+            this.render();
+        }
+
+        if (!this.cookie) {
+            localStorage.removeItem("notes");
         }
 
         if (this.store) {
@@ -163,7 +185,7 @@ class NoteUI extends NoteController {
             title.innerText = note.data.title;
             const content = document.createElement("p");
             content.classList.add("note__content");
-            content.innerText = note.data.content;
+            content.innerText = note.data.body;
             const edit = document.createElement("button");
             edit.classList.add("note__edit");
             edit.innerText = "Edit";
@@ -186,7 +208,7 @@ class NoteUI extends NoteController {
                     flag = !flag;
                     let data = {
                         title: title.innerText,
-                        content: content.innerText,
+                        body: content.innerText,
                     };
                     this.edit(note.data.id, data);
                     this.cookie = 10 * 24 * 60 * 60;
