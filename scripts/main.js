@@ -3,113 +3,9 @@
  * NoteController
  * NoteUI
  */
+import NoteController from "./notecontroller.js";
 
-class Notes {
-    constructor(data) {
-        //{title: '', content: ''}
-        if (data.title.length > 0 || data.body.length > 0) this.data = data;
-    }
-
-    edit(data) {
-        Object.assign(this.data, data);
-    }
-
-    get() {
-        return `${this.data.title} \n ${this.data.body}`;
-    }
-}
-
-// let note = new Notes({title: 'title 1', content: 'content 1'});
-
-class NoteController {
-    constructor() {
-        this.notes = [];
-        this.id = 0;
-    }
-
-    add(data) {
-        if (data.title.length === 0 || data.body.length === 0) return;
-        let note = new Notes(data);
-        note.edit({ id: this.id++ });
-        this.notes.push(note);
-    }
-
-    remove(id) {
-        this.notes = this.notes.filter((note) => note.data.id !== id);
-    }
-
-    edit(id, data) {
-        let note = this.notes.find((note) => note.data.id === id);
-        note.edit(data);
-    }
-
-    get store() {
-        let data = localStorage.getItem("notes");
-        data = JSON.parse(data);
-        return data;
-    }
-
-    set store(data) {
-        let string = JSON.stringify(data);
-        localStorage.setItem("notes", string);
-    }
-
-    get cookie() {
-        let name = "notes";
-        let matches = document.cookie.match(
-            new RegExp(
-                "(?:^|; )" +
-                    name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, "\\$1") +
-                    "=([^;]*)"
-            )
-        );
-        return matches ? true : false;
-    }
-
-    set cookie(time) {
-        let options = {
-            path: "/",
-            secure: true,
-            "max-age": time,
-        };
-
-        if (options.expires instanceof Date) {
-            options.expires = options.expires.toUTCString();
-        }
-
-        let updatedCookie =
-            encodeURIComponent("notes") + "=" + encodeURIComponent("");
-
-        for (let optionKey in options) {
-            updatedCookie += "; " + optionKey;
-            let optionValue = options[optionKey];
-            if (optionValue !== true) {
-                updatedCookie += "=" + optionValue;
-            }
-        }
-
-        document.cookie = updatedCookie;
-    }
-
-    get() {
-        this.notes.forEach((note) => console.log(note.get()));
-    }
-
-    async getApiData (){
-        let resp = await fetch('https://jsonplaceholder.typicode.com/posts');
-        let data = await resp.json();
-        return data;
-    }
-}
-
-// const notes = new NoteController();
-
-// notes.add({title: 'title 1', content: 'content 1'});
-// notes.add({title: 'title 2', content: 'content 2'});
-// notes.add({title: 'title 3', content: 'content 3'});
-// notes.add({title: 'title 4', content: 'content 4'});
-
-class NoteUI extends NoteController {
+export default class NoteUI extends NoteController {
     constructor(selector) {
         super();
         this.root = document.querySelector(selector);
@@ -227,4 +123,4 @@ class NoteUI extends NoteController {
     }
 }
 
-new NoteUI("#root");
+
