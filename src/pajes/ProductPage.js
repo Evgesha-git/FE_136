@@ -1,4 +1,5 @@
 import { getItem } from "../utils/getApiData.js";
+import { addToCart, removeItem, getItemStatus } from "./Cart.js";
 
 export default class ProductPage{
     constructor(id){
@@ -35,7 +36,18 @@ export default class ProductPage{
         category.innerHTML = data.category;
         desc.innerHTML = data.description;
         price.innerHTML = data.price;
-        button.innerText = 'Add to card';
+        button.innerText = getItemStatus(data.id) ? 'Remove' : 'Add to card';
+
+        button.addEventListener('click', () => {
+            if (getItemStatus(data.id)){
+                removeItem(data.id);
+                button.innerText = 'Add to cart';
+            } else {
+                addToCart(data);
+                button.innerText = 'Remove';
+            }
+        });
+
         img.setAttribute('src', data.image);
 
         image.append(img);

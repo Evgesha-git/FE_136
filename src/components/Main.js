@@ -22,12 +22,9 @@ export default class Main {
         }
         
         const page = await import(`../pajes/${hash}.js`);
-        // console.log(page);
-        if (!id){
-            item = new page.default().init();
-        } else {
-            item = new page.default(id).init();
-        }
+        if (hash === 'Cart') item = page.default.init();
+        else item = new page.default(id).init();
+            
         
         this.elem.append(item);
     }

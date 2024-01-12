@@ -1,12 +1,16 @@
+import { widget } from "../pajes/Cart.js";
+
 export default class Header {
-    constructor(){
-        this.elem = document.createElement('div');
+    constructor() {
+        this.elem = document.createElement("div");
     }
 
-    render (){
-        this.elem.classList.add('header');
+    render() {
+        this.elem.classList.add("header");
+        let cart = document.createElement('div');
+        cart.classList.add('cart');
+        cart.append(widget);
         this.elem.innerHTML = `
-            <header>
                 <div class="logo">
                     <a href="#">
                         <img src="https://via.placeholder.com/50" alt="logo" />
@@ -19,16 +23,12 @@ export default class Header {
                         <li><a href="#About">About</a></li>
                     </ul>
                 </nav>
-                <div class="cart">
-                    <a href="#Cart">
-                        <span>0</span>
-                    </a>
-                </div>
-            </header>
         `;
+
+        this.elem.append(cart);
     }
 
-    init(){
+    init() {
         this.render();
         return this.elem;
     }

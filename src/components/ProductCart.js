@@ -1,3 +1,5 @@
+import { addToCart, removeItem, getItemStatus } from "../pajes/Cart.js";
+
 export default class ProductCart{
     constructor (data) {
         this.data = data;
@@ -26,10 +28,23 @@ export default class ProductCart{
         img.setAttribute('src', this.data.image);
         price.innerHTML = this.data.price;
 
+        const button = document.createElement('button');
+        button.innerText = getItemStatus(this.data.id) ? 'Remove' : 'Add to card';
+
+        button.addEventListener('click', () => {
+            if (getItemStatus(this.data.id)){
+                removeItem(this.data.id);
+                button.innerText = 'Add to cart';
+            } else {
+                addToCart(this.data);
+                button.innerText = 'Remove';
+            }
+        });
+
         imgLink.setAttribute('href', `#ProductPage_${this.data.id}`);
         titleLink.setAttribute('href', `#ProductPage_${this.data.id}`);
 
-        this.item.append(title, image, desc, price);
+        this.item.append(title, image, desc,button, price);
     }
 
     init() {
