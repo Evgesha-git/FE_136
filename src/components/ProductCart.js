@@ -1,4 +1,5 @@
 import { addToCart, removeItem, getItemStatus } from "../pajes/Cart.js";
+import anime from "animejs";
 
 export default class ProductCart{
     constructor (data) {
@@ -27,6 +28,20 @@ export default class ProductCart{
         desc.innerHTML = this.data.description;
         img.setAttribute('src', this.data.image);
         price.innerHTML = this.data.price;
+
+        image.addEventListener('mouseover', () => {
+            anime({
+                targets: img,
+                scale: 1.4,
+                
+            });
+        });
+        image.addEventListener('mouseout', () => {
+            anime({
+                targets: img,
+                scale: 1,
+            })
+        })
 
         const button = document.createElement('button');
         button.innerText = getItemStatus(this.data.id) ? 'Remove' : 'Add to card';
