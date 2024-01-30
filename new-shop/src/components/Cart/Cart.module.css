@@ -1,0 +1,22 @@
+.product {
+    padding: 20px;
+    max-width: 320px;
+    box-sizing: border-box;
+    border-radius: 10px;
+    box-shadow: 0 0 5px 3px #0000001f;
+}
+
+.img {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.img img {
+    width: 100%;
+}
+
+.price {
+    font-size: 20px;
+    font-style: italic;
+    text-align: right;
+}
