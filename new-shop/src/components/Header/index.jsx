@@ -1,6 +1,7 @@
 import React from "react";
 import { Link, Outlet } from "react-router-dom";
 import style from "./Header.module.css";
+import Widget from "../Widget";
 
 const Header = () => {
     return (
@@ -24,6 +25,7 @@ const Header = () => {
                         </li>
                     </ul>
                 </nav>
+                <Widget />
             </header>
             <Outlet />
         </>

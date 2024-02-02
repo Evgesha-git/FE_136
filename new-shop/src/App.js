@@ -4,6 +4,7 @@ import Header from './components/Header';
 import Home from './pages/Home';
 import Catalog from './pages/Catalog';
 import Product from './pages/Product';
+import { createContext, useEffect, useState } from 'react';
 
 const router = createBrowserRouter([
   {
@@ -27,10 +28,20 @@ const router = createBrowserRouter([
   },
 ]);
 
+export const CardContext = createContext()
+
 function App() {
+  const [card, setCard] = useState([]);
+
+  useEffect(() => {
+    console.log(card);
+  });
+
   return (
     <div className="App">
-      <RouterProvider router={router} />
+      <CardContext.Provider value={{ card, setCard }}>
+        <RouterProvider router={router} />
+      </CardContext.Provider>
     </div>
   );
 }

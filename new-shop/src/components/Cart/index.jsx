@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import style from "./Cart.module.css";
+import AddButtons from "../AddButtons";
 
 const Cart = ({ product }) => {
     return (
@@ -11,7 +12,7 @@ const Cart = ({ product }) => {
                 </Link>
             </div>
             <p className={style.price}>{product.price}</p>
-            <button>Add</button>
+            <AddButtons product={product} />
         </div>
     );
 };
