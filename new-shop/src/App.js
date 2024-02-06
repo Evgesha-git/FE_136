@@ -5,6 +5,8 @@ import Home from './pages/Home';
 import Catalog from './pages/Catalog';
 import Product from './pages/Product';
 import { createContext, useEffect, useState } from 'react';
+import Card from './pages/Card';
+import axios from 'axios';
 
 const router = createBrowserRouter([
   {
@@ -23,6 +25,10 @@ const router = createBrowserRouter([
       {
         path: '/products/:prodId',
         element: <Product />
+      },
+      {
+        path: '/card',
+        element: <Card className={'bg-red'} />
       }
     ]
   },
@@ -35,6 +41,10 @@ function App() {
 
   useEffect(() => {
     console.log(card);
+    (async () => {
+      const resp = await axios.get('https://tic-tac-toe-fbcbf-default-rtdb.europe-west1.firebasedatabase.app/users.json');
+      console.log(resp.data);
+    })();
   });
 
   return (

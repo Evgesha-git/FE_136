@@ -1,0 +1,52 @@
+.card {
+    padding: 0 16px;
+}
+
+.container {
+    margin: 0 auto;
+    max-width: 1000px;
+}
+
+.cardItems {
+    display: grid;
+    gap: 20px;
+}
+
+.item {
+    display: flex;
+    gap: 20px;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    position: relative;
+    border-radius: 10px;
+    box-shadow: 0 0 5px 3px #0004;
+}
+
+.img {
+    max-width: 100px;
+}
+
+.img img {
+    width: 100%;
+}
+
+.del {
+    position: absolute;
+    top: 0;
+    right: 0;
+    transform: translate(50%, -50%);
+    cursor: pointer;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 0 5px 3px #0004;
+}
+
+.buttons {
+    font-size: 24px;
+}

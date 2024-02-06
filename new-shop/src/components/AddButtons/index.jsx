@@ -1,16 +1,22 @@
 import { useState, useContext, useEffect } from "react";
 import { CardContext } from "../../App";
+import classNames from "classnames";
+import style from "./AddButton.module.css";
 
-const AddButtons = ({ product }) => {
+const AddButtons = ({ product, className }) => {
     const { card, setCard } = useContext(CardContext);
     const [added, setAdded] = useState(false);
-    const [count, setCount] = useState(1);
+    const [count, setCount] = useState(0);
+
     const regNum = /^[^\D]+$/g;
 
+    const mainClass = classNames(style.main, className);
+
     const addCard = () => {
-        product.count = count;
+        product.count = 1;
         setCard([...card, product]);
         setAdded(true);
+        setCount(1);
     };
 
     const countAdd = () => {
@@ -39,15 +45,17 @@ const AddButtons = ({ product }) => {
     };
 
     useEffect(() => {
-        const oldCard = card.map((i) => {
-            if (i.id === product.id) {
-                i.count = count;
-                return i;
-            } else {
-                return i;
-            }
-        });
-        setCard(oldCard);
+        if (count > 0) {
+            const oldCard = card.map((i) => {
+                if (i.id === product.id) {
+                    i.count = count;
+                    return i;
+                } else {
+                    return i;
+                }
+            });
+            setCard(oldCard);
+        }
     }, [count]);
 
     useEffect(() => {
@@ -59,7 +67,7 @@ const AddButtons = ({ product }) => {
     }, []);
 
     return (
-        <div>
+        <div className={mainClass}>
             {!added && <button onClick={addCard}>Add</button>}
             {added && (
                 <div>
