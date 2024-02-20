@@ -30,7 +30,16 @@ const Header: FC<THeaderProps> = (props) => {
 				<div className="logo">
 					<img src="https://via.placeholder.com/80" alt="logo" />
 				</div>
-				<nav className="nav">
+				<nav 
+					className="nav" 
+					style={{
+						maxWidth: '500px', 
+						width: '100%',
+						display: 'flex',
+						justifyContent: 'space-between',
+						alignItems: 'center'
+					}}
+				>
 					<Link to={"/"}>Home</Link>
 					<Link to={"todo"}>ToDo List</Link>
 				</nav>
