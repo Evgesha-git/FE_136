@@ -1,0 +1,13 @@
+[debug] [2024-02-23T18:44:15.337Z] ----------------------------------------------------------------------
+[debug] [2024-02-23T18:44:15.340Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\User\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js login
+[debug] [2024-02-23T18:44:15.341Z] CLI Version:   13.3.1
+[debug] [2024-02-23T18:44:15.341Z] Platform:      win32
+[debug] [2024-02-23T18:44:15.341Z] Node Version:  v21.6.1
+[debug] [2024-02-23T18:44:15.341Z] Time:          Fri Feb 23 2024 21:44:15 GMT+0300 (Москва, стандартное время)
+[debug] [2024-02-23T18:44:15.342Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2024-02-23T18:44:15.345Z] >>> [apiv2][query] GET https://firebase-public.firebaseio.com/cli.json [none]
+[info] i  Firebase optionally collects CLI and Emulator Suite usage and error reporting information to help improve our products. Data is collected in accordance with Google's privacy policy (https://policies.google.com/privacy) and is not used to identify you.
+ 
+[debug] [2024-02-23T18:44:15.749Z] <<< [apiv2][status] GET https://firebase-public.firebaseio.com/cli.json 200
+[debug] [2024-02-23T18:44:15.749Z] <<< [apiv2][body] GET https://firebase-public.firebaseio.com/cli.json {"cloudBuildErrorAfter":1594252800000,"cloudBuildWarnAfter":1590019200000,"defaultNode10After":1594252800000,"minVersion":"3.0.5","node8DeploysDisabledAfter":1613390400000,"node8RuntimeDisabledAfter":1615809600000,"node8WarnAfter":1600128000000}

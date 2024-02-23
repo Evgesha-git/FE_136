@@ -5,6 +5,7 @@ import Header from "./components/Header";
 import { useAction, useAppSelector } from "./hooks/redux";
 import HomePage from "./components/HomePage";
 import { TTodo } from "./store/reducers/toDoSlice";
+import ToDo from "./components/ToDo";
 
 const router = createBrowserRouter([
 	{
@@ -15,6 +16,10 @@ const router = createBrowserRouter([
 			{
 				path: '/',
 				element: <HomePage/>
+			},
+			{
+				path: '/todo',
+				element: <ToDo/>
 			}
 		]
 	},
